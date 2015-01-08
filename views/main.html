@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= key %>(搜评)</title>
+    <%- partial('common') %>
+  </head>
+  <body>
+  	<div class="container">
+		<div style="margin:1% 0% 3% 0%;">
+				<div class="row">
+					<div class="col-lg-5">
+						<form role="form" action="/main">
+					    	<div class="input-group">
+					    			<%  if (typeof(key) !== 'undefined' && key !== null)  { %>
+							    		<input type="text" class="form-control input-lg" id="key" maxlength="100" value="<%= key %>" >
+							    	<%  } else { %>
+							    		<input type="text" class="form-control input-lg" id="key" maxlength="100" >
+							    	<% } %>	
+							      <span class="input-group-btn">
+							        	<button class="btn btn-primary btn-lg" id="submit" onclick="search()">
+							        		&nbsp;<span class="glyphicon glyphicon-search"></span>&nbsp;
+							        	</button>
+							      </span>
+					    	</div><!-- /input-group -->
+					    </form>
+					</div><!-- /.col-lg-6 -->
+					<div class="col-md-3" style="margin-top:-2%;min-height:90px;">
+						<img id="loading" style="display:none;" width="120px" height="90px" src="/images/loading.gif">
+					</div>
+				</div><!-- /.row -->
+		</div> 
+	<h2 class="sub-header">评分信息</h2>
+    <div class="table-responsive" style="width:55%">
+            <table class="table table-striped">
+            	<tbody>
+		    	<tr>
+		    		<th width="8%"></th>
+		    		<th width="10%">豆瓣</th>
+		    		<th width="10%">IMDB</th>
+		    	</tr>
+		    	<!--
+		    	<tr>
+		    		<td>封面</td>
+		    		<td><a class="thumbnail" href="<%= movie_obj.douban_url %>" target="_blank"><img class="img-rounded" width="216px" height="319px" src="<%= movie_obj.douban_src %>"></a></td>
+		    		<td>
+			    		<% if (typeof(movie_obj.imdb_src) !== 'undefined' && movie_obj.imdb_src !== null) { %>
+			    			<a class="thumbnail" href="<%= movie_obj.imdb_url %>" target="_blank"><img class="img-rounded" width="216px" height="319px" src="<%= movie_obj.imdb_src %>"></a>
+			    		<%  } else { %>
+			    			暂无
+			    		<% } %>	
+		    		</td>	
+		    	</tr>
+		    	-->
+		    	<tr>
+		    		<td>评分</td>
+		    		<td><%= movie_obj.douban_score %> / 10</td>
+		    		<td>
+			    		<% if (typeof(movie_obj.imdb_score) !== 'undefined' && movie_obj.imdb_score !== null) { %>
+			    			<%= movie_obj.imdb_score %> / 10
+			    		<%  } else { %>
+			    			暂无
+			    		<% } %>	
+		    		</td>	
+		    	</tr>
+		    	<tr>
+		    		<td>评分人数</td>
+		    		<td><%= movie_obj.douban_user %></td>
+		    		<td>
+			    		<% if (typeof(movie_obj.imdb_user) !== 'undefined' && movie_obj.imdb_user !== null) { %>
+			    			<%= movie_obj.imdb_user %>
+			    		<%  } else { %>
+			    			暂无
+			    		<% } %>	
+		    		</td>
+		    	</tr>
+		    	<tr>
+		    		<td>地址</td>
+		    		<td><a href="<%= movie_obj.douban_url %>" target="_blank">豆瓣</a></td>
+		    		<td>
+			    		<% if (typeof(movie_obj.imdb_url) !== 'undefined' && movie_obj.imdb_url !== null) { %>
+			    			<a href="<%= movie_obj.imdb_url %>" target="_blank">IMDB</a>
+			    		<%  } else { %>
+			    			暂无
+			    		<% } %>	
+		    		</td>
+		    	</tr>	
+    		</tbody>
+    	</table>
+    </div>
+    <br>
+    <h2 class="sub-header">影片信息</h2>
+    <div class="table-responsive">
+            <table class="table table-striped">
+            	<tbody>
+			    	<tr>
+			    		<td width="10%">片名</td>
+			    		<td>
+				    		<% if (typeof(film_info.title) !== 'undefined' && film_info.title !== null) { %>
+				    			<%= film_info.title %>
+				    		<%  } else { %>
+				    			暂无
+				    		<% } %>	
+			    		</td>	
+			    	</tr>
+			    	<tr>
+			    		<td>年代</td>
+			    		<td>
+				    		<% if (typeof(film_info.year) !== 'undefined' && film_info.year !== null) { %>
+				    			<%= film_info.year %>
+				    		<%  } else { %>
+				    			暂无
+				    		<% } %>	
+			    		</td>
+			    	</tr>
+			    	<tr>
+			    		<td>导演</td>
+			    		<td>
+				    		<% if (typeof(film_info.directors) !== 'undefined' && film_info.directors !== null) { %>
+				    			<%= film_info.directors %>
+				    		<%  } else { %>
+				    			暂无
+				    		<% } %>	
+			    		</td>
+			    	</tr>
+			    	<tr>
+			    		<td>编剧</td>
+			    		<td>
+				    		<% if (typeof(film_info.writers) !== 'undefined' && film_info.writers !== null) { %>
+				    			<%= film_info.writers %>
+				    		<%  } else { %>
+				    			暂无
+				    		<% } %>	
+			    		</td>
+			    	</tr>
+			    	<tr>
+			    		<td>主演</td>
+			    		<td>
+				    		<% if (typeof(film_info.casts) !== 'undefined' && film_info.casts !== null) { %>
+				    			<%= film_info.casts %>
+				    		<%  } else { %>
+				    			暂无
+				    		<% } %>	
+			    		</td>
+			    	</tr>
+			    	<tr>
+			    		<td>影片类型</td>
+			    		<td>
+				    		<% if (typeof(film_info.genres) !== 'undefined' && film_info.genres !== null) { %>
+				    			<%= film_info.genres %>
+				    		<%  } else { %>
+				    			暂无
+				    		<% } %>	
+			    		</td>
+			    	</tr>
+			    	<tr>
+			    		<td>制片国家/地区</td>
+			    		<td>
+				    		<% if (typeof(film_info.countries) !== 'undefined' && film_info.countries !== null) { %>
+				    			<%= film_info.countries %>
+				    		<%  } else { %>
+				    			暂无
+				    		<% } %>	
+			    		</td>
+			    	</tr>
+			    	<% if (subtype === 'tv') { %>
+			    		<tr>
+				    		<td>首播</td>
+				    		<td>
+					    		<% if (typeof(film_info.pubdates) !== 'undefined' && film_info.pubdates !== null) { %>
+					    			<%= film_info.pubdates %>
+					    		<%  } else { %>
+					    			暂无
+					    		<% } %>	
+				    		</td>
+				    	</tr>
+			    	<%  } else { %>
+			    		<tr>
+				    		<td>上映日期</td>
+				    		<td>
+					    		<% if (typeof(film_info.pubdates) !== 'undefined' && film_info.pubdates !== null) { %>
+					    			<%= film_info.pubdates %>
+					    		<%  } else { %>
+					    			暂无
+					    		<% } %>	
+				    		</td>
+				    	</tr>
+				    	<tr>
+				    		<td>片长</td>
+				    		<td>
+					    		<% if (typeof(film_info.durations) !== 'undefined' && film_info.durations !== null) { %>
+					    			<%= film_info.durations %>
+					    		<%  } else { %>
+					    			暂无
+					    		<% } %>	
+				    		</td>
+				    	</tr>
+			    	<% } %>	
+			    	<tr>
+			    		<td>简介</td>
+			    		<td>
+				    		<% if (typeof(film_info.summary) !== 'undefined' && film_info.summary !== null) { %>
+				    			<%= film_info.summary %>
+				    		<%  } else { %>
+				    			暂无
+				    		<% } %>	
+			    		</td>
+			    	</tr>
+    		</tbody>
+    	</table>
+	</div>
+	<br>
+    <h2 class="sub-header">豆瓣短评</h2>
+    	<% if (typeof(s_comments) !== 'undefined' && s_comments.length > 0) { %>
+			<% s_comments.forEach(function (v, k){ %>
+				<div class="media">
+				  <div class="media-body">
+				  	<h4 class="media-heading">
+				  		<ul class="nav nav-pills" role="tablist">
+					      <li role="presentation"><a href="<%= v.user_url %>" target="_blank"><%= v.user_name %></a></li>
+					      <li role="presentation" style="margin-top:2.5%;"><%= v.comment_time %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+					      <li role="presentation" style="margin-top:2.5%;">
+					      	<% if (typeof(v.rate) !== 'undefined' && v.rate !== null && v.rate !== '') { %>
+					      		<% if (v.rate === '力荐') { %>
+					      			<span class="label label-primary">&nbsp;<%= v.rate %>&nbsp;</span>
+					      		 <% } else if(v.rate === '推荐') { %>
+					      		 	<span class="label label-success">&nbsp;<%= v.rate %>&nbsp;</span>
+					      		 <% } else if(v.rate === '还行') { %>
+					      		 	<span class="label label-info">&nbsp;<%= v.rate %>&nbsp;</span>
+					      		 <% } else if(v.rate === '较差') { %>
+					      		 	<span class="label label-warning">&nbsp;<%= v.rate %>&nbsp;</span>
+					      		 <% } else { %>
+					      		 	<span class="label label-danger">&nbsp;<%= v.rate %>&nbsp;</span>
+					      		 <% } %>
+					      		 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						    <% } %>
+					      	</li>
+					      <li role="presentation" style="margin-top:2.5%;"><code><%= v.votes %>有用</code></li>
+						</ul> 	 		
+				  	</h4>
+				  	<div class="well">
+				    	<%= v.comment_content %>
+					</div>
+				  </div>
+				</div>
+				<br>
+			<% })%>
+		<% } %>
+    <br>
+    <h2 class="sub-header">豆瓣长评</h2>
+    	<% if (typeof(l_comments) !== 'undefined' && l_comments.length > 0) { %>
+			<% l_comments.forEach(function (v, k){ %>
+				<div class="media">
+				  <div class="media-body">
+				  	<h4 class="media-heading">
+				  		<a href="<%= v.comment_url %>" target="_blank"><%= v.comment_title %></a>
+				  		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					    <% if (typeof(v.rate) !== 'undefined' && v.rate !== null && v.rate !== '') { %>
+				      		<% if (v.rate === '力荐') { %>
+				      			<span class="label label-primary">&nbsp;<%= v.rate %>&nbsp;</span>
+				      		 <% } else if(v.rate === '推荐') { %>
+				      		 	<span class="label label-success">&nbsp;<%= v.rate %>&nbsp;</span>
+				      		 <% } else if(v.rate === '还行') { %>
+				      		 	<span class="label label-info">&nbsp;<%= v.rate %>&nbsp;</span>
+				      		 <% } else if(v.rate === '较差') { %>
+				      		 	<span class="label label-warning">&nbsp;<%= v.rate %>&nbsp;</span>
+				      		 <% } else { %>
+				      		 	<span class="label label-danger">&nbsp;<%= v.rate %>&nbsp;</span>
+				      		 <% } %>					 	
+					    <% } %>	
+				  	</h4>
+				  	<ul class="nav nav-pills" role="tablist">
+					      <li role="presentation"><a href="<%= v.user_url %>" target="_blank"><img width="24" height="24" src="<%= v.user_img %>">&nbsp;&nbsp;<%= v.user_name %></a></li>
+					</ul> 
+					<br>
+					<div class="well">
+				    <%= v.comment_content %><a href="<%= v.comment_url %>" target="_blank">更多</a>
+				    </div>
+				  </div>
+				</div>
+				<br>
+			<% })%>
+		<% } %>
+</div>
+  </body>
+</html>

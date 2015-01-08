@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>您搜索的电影不存在(搜评)</title>
+    <%- partial('common') %>
+  </head>
+  <body>
+  	<div style="margin:1% 10% 0% 5%;">
+			<div class="row">
+				<div class="col-lg-5">
+					<form role="form">
+				    	<div class="input-group">
+				    			<%  if (typeof(key) !== 'undefined' && key !== null)  { %>
+						    		<input type="text" class="form-control input-lg" id="key" maxlength="100" value="<%= key %>" >
+						    	<%  } else { %>
+						    		<input type="text" class="form-control input-lg" id="key" maxlength="100" >
+						    	<% } %>	
+						      <span class="input-group-btn">
+						        	<button class="btn btn-danger btn-lg" id="submit" onclick="search()">
+						        		&nbsp;<span class="glyphicon glyphicon-search"></span>&nbsp;
+						        	</button>
+						      </span>
+				    	</div><!-- /input-group --> 	
+				    </form>
+				</div><!-- /.col-lg-5 -->
+				<div class="col-md-3" style="margin-top:-2%;min-height:90px;">
+					<img id="loading" style="display:none;" width="120px" height="90px" src="/images/loading.gif">
+				</div>
+			</div><!-- /.row -->
+			<br>
+			<h1>您搜索的电影不存在<h1>
+	</div>   
+  </body>
+</html>
+
