@@ -8,6 +8,9 @@
   	<div class="container">
 		<div style="margin:1% 0% 3% 0%;">
 				<div class="row">
+					<div class="col-md-1">
+						<a href="/"><label style="font-size:32px;font-family:Microsoft YaHei;color:#3388FF;cursor:pointer">搜评</label></a>
+					</div>
 					<div class="col-lg-5">
 						<form role="form" action="/main">
 					    	<div class="input-group">
@@ -54,9 +57,9 @@
 		    	<tr>
 		    		<td>评分</td>
 		    		<td><%= movie_obj.douban_score %> / 10</td>
-		    		<td>
-			    		<% if (typeof(movie_obj.imdb_score) !== 'undefined' && movie_obj.imdb_score !== null) { %>
-			    			<%= movie_obj.imdb_score %> / 10
+		    		<td id="imdb_score">
+			    		<% if (typeof(movie_obj.imdb_url) !== 'undefined' && movie_obj.imdb_url !== null) { %>
+			    			数据获取中，请稍后...
 			    		<%  } else { %>
 			    			暂无
 			    		<% } %>	
@@ -65,9 +68,9 @@
 		    	<tr>
 		    		<td>评分人数</td>
 		    		<td><%= movie_obj.douban_user %></td>
-		    		<td>
-			    		<% if (typeof(movie_obj.imdb_user) !== 'undefined' && movie_obj.imdb_user !== null) { %>
-			    			<%= movie_obj.imdb_user %>
+		    		<td id="imdb_user">
+			    		<% if (typeof(movie_obj.imdb_url) !== 'undefined' && movie_obj.imdb_url !== null) { %>
+			    			数据获取中，请稍后...
 			    		<%  } else { %>
 			    			暂无
 			    		<% } %>	
@@ -79,6 +82,7 @@
 		    		<td>
 			    		<% if (typeof(movie_obj.imdb_url) !== 'undefined' && movie_obj.imdb_url !== null) { %>
 			    			<a href="<%= movie_obj.imdb_url %>" target="_blank">IMDB</a>
+			    			<input hidden id="imdb_url" value="<%= movie_obj.imdb_url %>" >
 			    		<%  } else { %>
 			    			暂无
 			    		<% } %>	
@@ -283,3 +287,30 @@
 </div>
   </body>
 </html>
+<script>
+	$(function(){
+		var imdb_url = $('#imdb_url').val();
+		if(imdb_url !== null && imdb_url !==''){
+			$.ajax({
+				type: "GET",
+				url: "/getimdbInfo",
+				data: {url:imdb_url},
+				dataType: "json",
+				success: function(json){
+					var data=eval(json)
+					if(data.status==='success'){
+						$('#imdb_score').html(data.imdb_score+' / 10');
+						$('#imdb_user').html(data.imdb_user);
+					}else{
+						$('#imdb_score').html('获取失败');
+						$('#imdb_user').html('获取失败');
+					}
+				},
+				error: function(){
+					$('#imdb_score').html('获取失败');
+					$('#imdb_user').html('获取失败');
+				}
+			})
+		}
+	})
+</script>

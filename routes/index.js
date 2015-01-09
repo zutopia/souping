@@ -9,6 +9,28 @@ router.get('/', function(req, res) {3
 	res.render('index');
 })
 
+/* GET home page. */
+router.get('/getimdbInfo', function(req, res) {3
+	var params = Url.parse(req.url,true).query; 
+	var imdb_url = params.url;
+	if(imdb_url !== ''){
+		superagent.get(imdb_url).end(function (err, imdb) {
+			if(err){
+				console.log(err);
+				res.send({status:'fail'});
+			}else{
+				var $_imdb = cheerio.load(imdb.text);
+				var imdb_score = $_imdb('div.titlePageSprite.star-box-giga-star').html().trim();
+				var imdb_user = $_imdb('div.star-box-details > a').first().children('span').html().trim();
+				var imdb_movie_pic = $_imdb('#img_primary > div.image > a > img ').attr('src');
+				res.send({status:'success',imdb_score:imdb_score,imdb_user:imdb_user});
+			}	
+		})
+	} else {
+		res.send({status:'fail'});
+	}
+})
+
 /* GET main page. */
 router.get('/main', function(req, res) {
 	var params = Url.parse(req.url,true).query; 
@@ -185,6 +207,7 @@ router.get('/main', function(req, res) {
 						})
 						console.log(film_info);
 						if(imdb_url !== ''){
+							/*
 							superagent.get(imdb_url).end(function (err, imdb) {
 								if(err){
 									console.log(err);
@@ -202,9 +225,16 @@ router.get('/main', function(req, res) {
 									res.render('main', {  l_comments:l_comments, s_comments:s_comments ,subtype:subtype, key:key ,movie_obj:movie_obj , film_info:film_info });
 								}	
 							})
-						} else {
+							*/
+							movie_obj.imdb_url = imdb_url;
+
+						}
+						/* 
+						else {
 							res.render('main', {   l_comments:l_comments, s_comments:s_comments ,subtype:subtype, key:key ,movie_obj:movie_obj , film_info:film_info });
-						}			
+						}
+						*/
+						res.render('main', {  l_comments:l_comments, s_comments:s_comments ,subtype:subtype, key:key ,movie_obj:movie_obj , film_info:film_info });			
 					})
 				})
 			}
