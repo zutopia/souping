@@ -18,7 +18,12 @@
 			$('#loading').show();
 			$('#key').attr("readonly","readonly");
 			$("#submit").attr('disabled',true);
-			window.location.href="/main?key="+$('#key').val();
+			var key = $('#key').val();
+			if(typeof(key) ==='undefined' || key === null || key ===''){
+				window.location.href="/";
+			}else{
+				window.location.href="/main?key="+key;
+			}
 		}
 	</script>	
 </header>
