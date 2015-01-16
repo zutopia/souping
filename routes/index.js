@@ -41,7 +41,6 @@ router.get('/main', function(req, res) {
 	} else {
 		superagent.get('https://api.douban.com/v2/movie/search?q='+key).end(function (err, sres) {
 			var r_obj = JSON.parse(sres.text);
-			console.log(r_obj);
 			var film_arr = r_obj.subjects;
 			if(typeof(film_arr) === 'undefined' || film_arr === null || film_arr.length === 0){
 				res.render('error', { key:key});
@@ -56,6 +55,30 @@ router.get('/main', function(req, res) {
 					var org_title = film.original_title;
 					var title = film.title;
 					var img = film.images.large;
+					var g_arr = film.genres;
+					var genres = '';
+					for(var i in g_arr){
+						genres += ' / ' + g_arr[i] ;
+					}
+					if(genres.length>0){
+						genres = genres.substring(3);
+					}
+					var c_arr = film.casts;
+					var casts = '';
+					for(var i in c_arr){
+						casts += ' / ' + c_arr[i].name ;
+					}
+					if(casts.length>0){
+						casts = casts.substring(3);
+					}
+					var d_arr = film.directors;
+					var directors = '';
+					for(var i in d_arr){
+						directors += ' / ' + d_arr[i].name ;
+					}
+					if(directors.length>0){
+						directors = directors.substring(3);
+					}
 					var obj = new Object();
 					obj.id = id;
 					obj.subtype = subtype;
@@ -64,6 +87,9 @@ router.get('/main', function(req, res) {
 					obj.org_title = org_title;
 					obj.title = title;
 					obj.img = img;
+					obj.genres = genres;
+					obj.casts = casts;
+					obj.directors = directors;
 					filelist.push(obj);
 				}
 				res.render('main', { list:filelist, key:key });
