@@ -38,7 +38,7 @@
 				<div class="media">
 				  <div class="media-body">
 				  	<h4 class="media-heading">
-				  		<a href="/detail?id=<%= v.id %>" data-toggle="popover" onmouseover="showPop('<%= v.id %>','<%= v.img %>','<%= k %>')"  onmouseout="hidePop('<%= v.id %>')" id="<%= v.id %>" target="_blank"><%= v.title %>(<%= v.year %>)</a>
+				  		<a href="/detail?id=<%= v.id %>" data-toggle="popover" onmouseover="showPop('<%= v.id %>','<%= v.img %>','<%= k %>','<%= v.title %>')"  onmouseout="hidePop('<%= v.id %>')" id="<%= v.id %>" target="_blank"><%= v.title %>(<%= v.year %>)</a>
 				  	</h4>
 				  	<b>豆瓣评分：</b><b style="color:#C7254E;"><%= v.score %></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				  	<b>类型：</b><% if (v.subtype === 'tv') { %>
@@ -99,21 +99,35 @@ function checkimg(obj,obj2){
 	$(obj2).attr('src',obj.src); 
 } 
 
-function showPop(id,imgurl,order){
+function showPop(id,imgurl,order,title){
 	var placement = 'right';
 	$('#'+id).popover({
 		placement:placement,
 		html:true,
 		//content:'<div style="width:160px;height:230px;text-align:center;" ><img style="margin-top:100px;" id="img_'+id+'" width="25" height="25" src="/images/loading3.gif"></div>'
 		//content:'<img  id="img_'+id+'" width="120" height="90" src="/images/loading2.gif">'
-		content:'<img  id="img_'+id+'" width="25" height="25" src="/images/loading3.gif">'
+		content:'<a href="/detail?id='+id+'" target="_blank"><img  id="img_'+id+'"  onmouseover="showThis()" onmouseout="hidePop(\''+id+'\')" width="25" height="25" src="/images/loading3.gif" title="'+title+'"></a>'
 	})
 	$('#'+id).popover('show');
 	Imagess(imgurl,$('#img_'+id),checkimg);
 }
 
 function hidePop(id){
-	$('#'+id).popover('hide');
+	setTimeout('hideThis("'+id+'")', 300);
+}
+
+function hideThis(id){
+	if(!flag){
+		$('#'+id).popover('hide');
+	}else{
+		flag = false;
+	}
+	
+}
+
+var flag = false;
+function showThis(){
+	flag = true;
 }
 </script>
 
