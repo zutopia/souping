@@ -20,10 +20,25 @@ router.get('/getimdbInfo', function(req, res) {3
 				res.send({status:'fail'});
 			}else{
 				var $_imdb = cheerio.load(imdb.text);
-				var imdb_score = $_imdb('div.titlePageSprite.star-box-giga-star').html().trim();
-				var imdb_user = $_imdb('div.star-box-details > a').first().children('span').html().trim();
+				var flag = false;
+				var imdb_score = $_imdb('div.titlePageSprite.star-box-giga-star').html();
+				if(imdb_score !== null && imdb_score !== ''){
+				    imdb_score = imdb_score.trim();
+				}else{
+				    flag = true;
+				}
+				var imdb_user = $_imdb('div.star-box-details > a').first().children('span').html();
+				if(imdb_user !== null && imdb_user !== ''){
+				    imdb_user = imdb_user.trim();
+				}else{
+				    flag = true;
+				}
 				var imdb_movie_pic = $_imdb('#img_primary > div.image > a > img ').attr('src');
-				res.send({status:'success',imdb_score:imdb_score,imdb_user:imdb_user});
+				if(flag){
+				    res.send({status:'fail'});
+				}else{
+				    res.send({status:'success',imdb_score:imdb_score,imdb_user:imdb_user});
+				}
 			}	
 		})
 	} else {
