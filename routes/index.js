@@ -5,12 +5,12 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res) {3
+router.get('/', function(req, res) {
 	res.render('index');
 })
 
 /* GET home page. */
-router.get('/getimdbInfo', function(req, res) {3
+router.get('/getimdbInfo', function(req, res) {
 	var params = Url.parse(req.url,true).query; 
 	var imdb_url = params.url;
 	if(imdb_url !== ''){
