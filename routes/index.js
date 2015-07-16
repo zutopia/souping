@@ -304,4 +304,34 @@ function stringWithDot(s){
 	}
 	return s_arr.join(",");
 }
+
+
+function stringWithDot2(s,n){
+    if( arguments.length === 0 ){
+        return '';
+    }
+    if( arguments.length === 1 ){
+        n = 3;
+    }
+    n = parseInt(n);
+    s += '';
+    var i = s.length%n === 0 ? Math.floor(s.length/n) : (Math.floor(s.length/n) + 1);
+    var arr = new Array();
+    for(var j = 0; j<i ; j++){
+        arr.push(s.substring((s.length-(j+1)*n)<0?0:(s.length-(j+1)*n),s.length-j*n));
+    }
+    return arr.reverse().join(",");
+}
+
+var re = "";
+function stringWithDot3(s,n){
+	if(s.length > n){
+		re = "," + s.substring(s.length-n) + re;
+		stringWithDot3(s.substring(0,s.length-n),n)
+	}else{
+		re = s + re;
+	}
+}
+
+
 module.exports = router;
