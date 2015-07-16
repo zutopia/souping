@@ -1,39 +1,38 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %>(搜评)--详情</title>
+    <title><%= title %>_搜评</title>
     <%- partial('common') %>
   </head>
   <body>
   	<div class="container">
-  		<!--
-		<div style="margin:1% 0% 3% 0%;">
-				<div class="row">
-					<div class="col-md-1">
-						<a href="/"><label style="font-size:32px;font-family:Microsoft YaHei;color:#3388FF;cursor:pointer">搜评</label></a>
-					</div>
-					<div class="col-lg-5">
-						<form role="form" action="/main">
-					    	<div class="input-group">
-					    			<%  if (typeof(key) !== 'undefined' && key !== null)  { %>
-							    		<input type="text" class="form-control input-lg" id="key" maxlength="100" value="<%= key %>" >
-							    	<%  } else { %>
-							    		<input type="text" class="form-control input-lg" id="key" maxlength="100" >
-							    	<% } %>	
-							      <span class="input-group-btn">
-							        	<button class="btn btn-primary btn-lg" id="submit" onclick="search()">
-							        		&nbsp;<span class="glyphicon glyphicon-search"></span>&nbsp;
-							        	</button>
-							      </span>
-					    	</div>
-					    </form>
-					</div>
-					<div class="col-md-3" style="margin-top:-2%;min-height:90px;">
-						<img id="loading" style="display:none;" width="120px" height="90px" src="/images/loading.gif">
-					</div>
+  		<div style="margin:1% 0% 0% 0%;">
+			<div class="row">
+				<div class="col-md-1">
+					<a href="/" style="text-decoration:none;"><h1 style="margin-top:5px;font-size:32px;font-family:Microsoft YaHei;color:#3388FF;cursor:pointer">搜评</h1></a>
 				</div>
-		</div> 
-		-->
+				<div class="col-lg-5">
+					<form role="form" action="/main">
+				    	<div class="input-group">
+				    			<%  if (typeof(key) !== 'undefined' && key !== null)  { %>
+						    		<input type="text" class="form-control input-lg" id="key" maxlength="100" value="<%= key %>" >
+						    	<%  } else { %>
+						    		<input type="text" class="form-control input-lg" id="key" maxlength="100" >
+						    	<% } %>	
+						      <span class="input-group-btn">
+						        	<button class="btn btn-warning btn-lg" id="submit" onclick="search()">
+						        		&nbsp;<span class="glyphicon glyphicon-search"></span>&nbsp;
+						        	</button>
+						      </span>
+				    	</div><!-- /input-group -->
+				    </form>
+				</div><!-- /.col-lg-6 -->
+				<div class="col-md-3" style="margin-top:0%;">
+					<i id="loading" style="display:none;" class="fa fa-spinner fa-spin fa-3x"></i>
+				</div>
+			</div><!-- /.row -->
+		</div>
+		<br>
 	<h2 class="sub-header">评分信息</h2>
     <div class="table-responsive" style="width:55%">
             <table class="table table-striped">
@@ -88,7 +87,7 @@
 			    	<tr>
 			    		<td width="10%">片名</td>
 			    		<td>
-				    		<% if (typeof(film_info.title) !== 'undefined' && film_info.title !== null) { %>
+				    		<% if (typeof(film_info.title) !== 'undefined' && film_info.title !== null && film_info.title !== '') { %>
 				    			<%= film_info.title %>
 				    		<%  } else { %>
 				    			暂无
@@ -98,7 +97,7 @@
 			    	<tr>
 			    		<td>年代</td>
 			    		<td>
-				    		<% if (typeof(film_info.year) !== 'undefined' && film_info.year !== null) { %>
+				    		<% if (typeof(film_info.year) !== 'undefined' && film_info.year !== null && film_info.year !== '') { %>
 				    			<%= film_info.year %>
 				    		<%  } else { %>
 				    			暂无
@@ -108,7 +107,7 @@
 			    	<tr>
 			    		<td>导演</td>
 			    		<td>
-				    		<% if (typeof(film_info.directors) !== 'undefined' && film_info.directors !== null) { %>
+				    		<% if (typeof(film_info.directors) !== 'undefined' && film_info.directors !== null && film_info.directors !== '') { %>
 				    			<%= film_info.directors %>
 				    		<%  } else { %>
 				    			暂无
@@ -118,7 +117,7 @@
 			    	<tr>
 			    		<td>编剧</td>
 			    		<td>
-				    		<% if (typeof(film_info.writers) !== 'undefined' && film_info.writers !== null) { %>
+				    		<% if (typeof(film_info.writers) !== 'undefined' && film_info.writers !== null && film_info.writers !== '') { %>
 				    			<%= film_info.writers %>
 				    		<%  } else { %>
 				    			暂无
@@ -128,7 +127,7 @@
 			    	<tr>
 			    		<td>主演</td>
 			    		<td>
-				    		<% if (typeof(film_info.casts) !== 'undefined' && film_info.casts !== null) { %>
+				    		<% if (typeof(film_info.casts) !== 'undefined' && film_info.casts !== null && film_info.casts !== '') { %>
 				    			<%= film_info.casts %>
 				    		<%  } else { %>
 				    			暂无
@@ -138,7 +137,7 @@
 			    	<tr>
 			    		<td>影片类型</td>
 			    		<td>
-				    		<% if (typeof(film_info.genres) !== 'undefined' && film_info.genres !== null) { %>
+				    		<% if (typeof(film_info.genres) !== 'undefined' && film_info.genres !== null && film_info.genres !== '') { %>
 				    			<%= film_info.genres %>
 				    		<%  } else { %>
 				    			暂无
@@ -148,7 +147,7 @@
 			    	<tr>
 			    		<td>制片国家/地区</td>
 			    		<td>
-				    		<% if (typeof(film_info.countries) !== 'undefined' && film_info.countries !== null) { %>
+				    		<% if (typeof(film_info.countries) !== 'undefined' && film_info.countries !== null && film_info.countries !== '') { %>
 				    			<%= film_info.countries %>
 				    		<%  } else { %>
 				    			暂无
@@ -159,7 +158,7 @@
 			    		<tr>
 				    		<td>首播</td>
 				    		<td>
-					    		<% if (typeof(film_info.pubdates) !== 'undefined' && film_info.pubdates !== null) { %>
+					    		<% if (typeof(film_info.pubdates) !== 'undefined' && film_info.pubdates !== null && film_info.pubdates !== '') { %>
 					    			<%= film_info.pubdates %>
 					    		<%  } else { %>
 					    			暂无
@@ -170,7 +169,7 @@
 			    		<tr>
 				    		<td>上映日期</td>
 				    		<td>
-					    		<% if (typeof(film_info.pubdates) !== 'undefined' && film_info.pubdates !== null) { %>
+					    		<% if (typeof(film_info.pubdates) !== 'undefined' && film_info.pubdates !== null && film_info.pubdates !== '') { %>
 					    			<%= film_info.pubdates %>
 					    		<%  } else { %>
 					    			暂无
@@ -180,7 +179,7 @@
 				    	<tr>
 				    		<td>片长</td>
 				    		<td>
-					    		<% if (typeof(film_info.durations) !== 'undefined' && film_info.durations !== null) { %>
+					    		<% if (typeof(film_info.durations) !== 'undefined' && film_info.durations !== null && film_info.durations !== '') { %>
 					    			<%= film_info.durations %>
 					    		<%  } else { %>
 					    			暂无
@@ -191,7 +190,7 @@
 			    	<tr>
 			    		<td>简介</td>
 			    		<td>
-				    		<% if (typeof(film_info.summary) !== 'undefined' && film_info.summary !== null) { %>
+				    		<% if (typeof(film_info.summary) !== 'undefined' && film_info.summary !== null && film_info.summary !== '') { %>
 				    			<%= film_info.summary %>
 				    		<%  } else { %>
 				    			暂无

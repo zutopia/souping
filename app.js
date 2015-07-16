@@ -1,4 +1,4 @@
-require('newrelic');
+//require('newrelic');
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -56,7 +56,7 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(process.env.VCAP_APP_PORT || 3000, function () {
-    console.log("imdban fuck you baby on " + (process.env.VCAP_APP_PORT || 3000) );
+    console.log("souping fuck you asshole on " + (process.env.VCAP_APP_PORT || 3000) );
 });
 
 module.exports = app;

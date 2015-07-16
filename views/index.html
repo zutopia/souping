@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>搜评</title>
+    <title>搜评-开启你的电影搜索之旅</title>
     <%- partial('common') %>
   </head>
   <body>
-		<div style="margin:20% 10% 10% 30%;">
+		<div style="margin-top:10px">
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="http://weibo.com/panhongbo" title="我的微博啦"><i class="fa fa-weibo fa-2x"></i></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="https://github.com/panhb/souping" title="项目源码咯"><i class="fa fa-github-alt fa-2x"></i></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="mailto:391400311@qq.com" title="欢迎提问题啊"><i class="fa fa-envelope fa-2x"></i></a>
+		</div>
+		<div style="margin:10% 10% 10% 30%;">
 			<div class="row">
 				<div class="col-lg-8">
-					<h1 style="margin-left:40%;font-family:Microsoft YaHei;color:#3388FF;">搜评</h1>
+					<a href="/" style="text-decoration:none;"><h1 style="cursor:pointer;margin-left:40%;font-family:Microsoft YaHei;color:#3388FF;">搜评
+					<span style="font-size:16px;color:#000000;">--开启你的电影搜索之旅</span></h1></a>
 					<br>
 					<form role="form">
 				    	<div class="input-group">
@@ -22,8 +31,8 @@
 				    </form>
 				</div><!-- /.col-lg-6 -->
 			</div><!-- /.row -->
-			<div id="loading" style="margin:0% 10% 0% 20%;display:none;">
-				<img width="200px" height="150px" src="/images/loading.gif">
+			<div  style="margin:5% 0% 0% 25%;">
+				<i id="loading" style="display:none;" class="fa fa-spinner fa-spin fa-5x"></i>
 			</div>
 		</div>
   </body>

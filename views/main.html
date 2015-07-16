@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= key %>(搜评)</title>
+    <title><%= key %>_搜评</title>
     <%- partial('common') %>
   </head>
   <body>
-  	<div class="container">
-		<div style="margin:1% 0% 3% 0%;">
+  	<div class="container" style="margin-bottom:140px;">
+		<div style="margin:1% 0% 0% 0%;">
 			<div class="row">
 				<div class="col-md-1">
-					<a href="/"><label style="font-size:32px;font-family:Microsoft YaHei;color:#3388FF;cursor:pointer">搜评</label></a>
+					<a href="/" style="text-decoration:none;"><h1 style="margin-top:5px;font-size:32px;font-family:Microsoft YaHei;color:#3388FF;cursor:pointer">搜评</h1></a>
 				</div>
 				<div class="col-lg-5">
 					<form role="form" action="/main">
@@ -20,25 +20,29 @@
 						    		<input type="text" class="form-control input-lg" id="key" maxlength="100" >
 						    	<% } %>	
 						      <span class="input-group-btn">
-						        	<button class="btn btn-primary btn-lg" id="submit" onclick="search()">
+						        	<button class="btn btn-warning btn-lg" id="submit" onclick="search()">
 						        		&nbsp;<span class="glyphicon glyphicon-search"></span>&nbsp;
 						        	</button>
 						      </span>
 				    	</div><!-- /input-group -->
 				    </form>
 				</div><!-- /.col-lg-6 -->
-				<div class="col-md-3" style="margin-top:-2%;min-height:90px;">
-					<img id="loading" style="display:none;" width="120px" height="90px" src="/images/loading.gif">
+				<div class="col-md-3" style="margin-top:0%;">
+					<i id="loading" style="display:none;" class="fa fa-spinner fa-spin fa-3x"></i>
 				</div>
 			</div><!-- /.row -->
 		</div>
-
+		<br>
 		<% if (typeof(list) !== 'undefined' && list.length > 0) { %>
 			<% list.forEach(function (v, k){ %>
 				<div class="media">
 				  <div class="media-body">
 				  	<h4 class="media-heading">
-				  		<a href="/detail?id=<%= v.id %>" data-toggle="popover" onmouseover="showPop('<%= v.id %>','<%= v.img %>','<%= k %>','<%= v.title %>')"  onmouseout="hidePop('<%= v.id %>')" id="<%= v.id %>" target="_blank"><%= v.title %>(<%= v.year %>)</a>
+				  		<a href="/detail?id=<%= v.id %>" data-toggle="popover" onmouseover="showPop('<%= v.id %>','<%= v.img %>','<%= k %>','<%= v.title %>')"  onmouseout="hidePop('<%= v.id %>')" id="<%= v.id %>" target="_blank"><%= v.title %>
+						<% if (typeof(v.year) !== 'undefined' && v.year !== '') { %>
+						(<%= v.year %>)
+						<% } %>
+						</a>
 				  	</h4>
 				  	<b>豆瓣评分：</b><b style="color:#C7254E;"><%= v.score %></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				  	<b>类型：</b><% if (v.subtype === 'tv') { %>
@@ -46,13 +50,33 @@
 				  	<%  } else { %>
 				  		电影
 				  	<% } %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				  	<b>原始名：</b><%= v.org_title %>
+				  	<b>原始名：</b>
+					<% if (typeof(v.org_title) !== 'undefined' && v.org_title !== null && v.org_title !== '') { %>
+						<%= v.org_title %>
+					<%  } else { %>
+						暂无
+					<% } %>
 				  	<br>
-				  	<b>导演：</b><%= v.directors %>
+				  	<b>导演：</b>
+					<% if (typeof(v.directors) !== 'undefined' && v.directors !== null && v.directors !== '') { %>
+						<%= v.directors %>
+					<%  } else { %>
+						暂无
+					<% } %>
 				  	<br>
-				  	<b>主演：</b><%= v.casts %>
+				  	<b>主演：</b>
+					<% if (typeof(v.casts) !== 'undefined' && v.casts !== null && v.casts !== '') { %>
+						<%= v.casts %>
+					<%  } else { %>
+						暂无
+					<% } %>
 				  	<br>
-				  	<b>影片类型：</b><%= v.genres %>
+				  	<b>影片类型：</b>
+					<% if (typeof(v.genres) !== 'undefined' && v.genres !== null && v.genres !== '') { %>
+						<%= v.genres %>
+					<%  } else { %>
+						暂无
+					<% } %>
 				  </div>
 				</div>
 				<br>
