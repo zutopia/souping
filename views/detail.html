@@ -4,6 +4,9 @@
     <title><%= title %>_搜评</title>
     <%- partial('common') %>
   </head>
+  <!--
+  <body style="background-color:#000000;">
+  -->
   <body>
   	<div class="container">
   		<div style="margin:1% 0% 0% 0%;">
@@ -33,8 +36,18 @@
 			</div><!-- /.row -->
 		</div>
 		<br>
-	<h2 class="sub-header">评分信息</h2>
-    <div class="table-responsive" style="width:55%">
+	<hr>
+	<div>
+
+    <div style="float:left;width:30%;margin-left:5%;">
+    	<img src="<%= movie_obj.douban_src %>">
+    </div>
+    <div style="float:left;width:5%;">
+    	&nbsp;
+    </div>
+    <div class="table-responsive" style="width:55%;float:left;">
+    	<h3 class="sub-header">评分信息</h3>
+    	<hr>
             <table class="table table-striped">
             	<tbody>
 		    	<tr>
@@ -44,7 +57,7 @@
 		    	</tr>
 		    	<tr>
 		    		<td>评分</td>
-		    		<td><%= movie_obj.douban_score %> / 10</td>
+		    		<td><span style="color:#f0ad4e;font-weight:600;font-size:20px;"><%= movie_obj.douban_score_1 %></span><% if (movie_obj.douban_score_2 !== '' ) { %><span style="color:#f0ad4e;font-weight:600;">.<%= movie_obj.douban_score_2 %></span><% } %></td>
 		    		<td id="imdb_score">
 			    		<% if (typeof(movie_obj.imdb_url) !== 'undefined' && movie_obj.imdb_url !== null) { %>
 			    			数据获取中，请稍后...
@@ -55,7 +68,7 @@
 		    	</tr>
 		    	<tr>
 		    		<td>评分人数</td>
-		    		<td><%= movie_obj.douban_user %></td>
+		    		<td><span style="color:#5cb85c;font-weight:600;"><%= movie_obj.douban_user %></span></td>
 		    		<td id="imdb_user">
 			    		<% if (typeof(movie_obj.imdb_url) !== 'undefined' && movie_obj.imdb_url !== null) { %>
 			    			数据获取中，请稍后...
@@ -66,10 +79,10 @@
 		    	</tr>
 		    	<tr>
 		    		<td>地址</td>
-		    		<td><a href="<%= movie_obj.douban_url %>" target="_blank">豆瓣</a></td>
+		    		<td><span style="color:##3388FF;font-weight:600;"><a href="<%= movie_obj.douban_url %>" target="_blank">豆瓣</a></span></td>
 		    		<td>
 			    		<% if (typeof(movie_obj.imdb_url) !== 'undefined' && movie_obj.imdb_url !== null) { %>
-			    			<a href="<%= movie_obj.imdb_url %>" target="_blank">IMDB</a>
+			    			<span style="color:##3388FF;font-weight:600;"><a href="<%= movie_obj.imdb_url %>" target="_blank">IMDB</a></span>
 			    			<input hidden id="imdb_url" value="<%= movie_obj.imdb_url %>" >
 			    		<%  } else { %>
 			    			暂无
@@ -79,9 +92,13 @@
     		</tbody>
     	</table>
     </div>
+    
+    </div>
     <br>
-    <h2 class="sub-header">影片信息</h2>
-    <div class="table-responsive">
+    
+    <div>
+    	<h3 style="margin:45% 0% 1% 0%;">影片信息</h3>
+    	<hr>
             <table class="table table-striped">
             	<tbody>
 			    	<tr>
@@ -201,7 +218,8 @@
     	</table>
 	</div>
 	<br>
-    <h2 class="sub-header">豆瓣短评</h2>
+    <h3 class="sub-header">豆瓣短评</h3>
+    <hr>
     	<% if (typeof(s_comments) !== 'undefined' && s_comments.length > 0) { %>
 			<% s_comments.forEach(function (v, k){ %>
 				<div class="media">
@@ -240,7 +258,8 @@
 			暂无
 		<% } %>	
     <br>
-    <h2 class="sub-header">豆瓣长评</h2>
+    <h3 class="sub-header">豆瓣长评</h3>
+    <hr>
     	<% if (typeof(l_comments) !== 'undefined' && l_comments.length > 0) { %>
 			<% l_comments.forEach(function (v, k){ %>
 				<div class="media">
@@ -291,8 +310,11 @@
 				success: function(json){
 					var data=eval(json)
 					if(data.status==='success'){
-						$('#imdb_score').html(data.imdb_score+' / 10');
-						$('#imdb_user').html(data.imdb_user);
+						//$('#imdb_score').html(data.imdb_score+' / 10');
+						var m = data.imdb_score.split('.')[0];
+						var n = data.imdb_score.split('.')[1];
+						$('#imdb_score').html('<span style="color:#f0ad4e;font-weight:600;font-size:20px;">'+m+'</span><span style="color:#f0ad4e;font-weight:600;">.'+n+'</span>');
+						$('#imdb_user').html('<span style="color:#5cb85c;font-weight:600;">'+data.imdb_user+'</span>');
 					}else{
 						$('#imdb_score').html('获取失败');
 						$('#imdb_user').html('获取失败');

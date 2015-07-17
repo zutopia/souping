@@ -132,6 +132,11 @@ router.get('/detail', function(req, res) {
 		movie_obj.douban_src = s_obj.images.large;
 		//评分
 		movie_obj.douban_score = s_obj.rating.average;
+		var score_arr = (s_obj.rating.average+'').split('.');
+		movie_obj.douban_score_1 = score_arr[0];
+		movie_obj.douban_score_2 = '';
+		if(score_arr.length>1)
+			movie_obj.douban_score_2 = score_arr[1];
 		//评分人数
 		movie_obj.douban_user = stringWithDot(s_obj.ratings_count);
 
