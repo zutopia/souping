@@ -7,7 +7,7 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res) {
 	res.render('index');
-})
+});
 
 /* GET home page. */
 router.get('/getimdbInfo', function(req, res) {
@@ -40,11 +40,11 @@ router.get('/getimdbInfo', function(req, res) {
 				    res.send({status:'success',imdb_score:imdb_score,imdb_user:imdb_user});
 				}
 			}	
-		})
+		});
 	} else {
 		res.send({status:'fail'});
 	}
-})
+});
 
 /* GET main page. */
 router.get('/main', function(req, res) {
@@ -60,7 +60,7 @@ router.get('/main', function(req, res) {
 			if(typeof(film_arr) === 'undefined' || film_arr === null || film_arr.length === 0){
 				res.render('error', { key:key});
 			} else {
-				var filelist = new Array();
+				var filelist = [];
 				for(var i in film_arr){
 					var film = film_arr[i];
 					var id = film.id;
@@ -72,29 +72,29 @@ router.get('/main', function(req, res) {
 					var img = film.images.large;
 					var g_arr = film.genres;
 					var genres = '';
-					for(var i in g_arr){
-						genres += ' / ' + g_arr[i] ;
+					for(var j in g_arr){
+						genres += ' / ' + g_arr[j] ;
 					}
 					if(genres.length>0){
 						genres = genres.substring(3);
 					}
 					var c_arr = film.casts;
 					var casts = '';
-					for(var i in c_arr){
-						casts += ' / ' + c_arr[i].name ;
+					for(var k in c_arr){
+						casts += ' / ' + c_arr[k].name ;
 					}
 					if(casts.length>0){
 						casts = casts.substring(3);
 					}
 					var d_arr = film.directors;
 					var directors = '';
-					for(var i in d_arr){
-						directors += ' / ' + d_arr[i].name ;
+					for(var v in d_arr){
+						directors += ' / ' + d_arr[v].name ;
 					}
 					if(directors.length>0){
 						directors = directors.substring(3);
 					}
-					var obj = new Object();
+					var obj = {};
 					obj.id = id;
 					obj.subtype = subtype;
 					obj.year = year;
@@ -109,9 +109,9 @@ router.get('/main', function(req, res) {
 				}
 				res.render('main', { list:filelist, key:key });
 			}
-		})
+		});
 	}
-})
+});
 
 
 /* GET detail page. */
@@ -123,7 +123,7 @@ router.get('/detail', function(req, res) {
 	superagent.get('https://api.douban.com/v2/movie/subject/'+id).end(function (err, m) {
 		var s_obj = JSON.parse(m.text);
 		var douban_url = s_obj.alt;
-		var movie_obj = new Object();
+		var movie_obj = {};
 		subtype = s_obj.subtype;
 		title = s_obj.title;
 		//链接
@@ -135,7 +135,7 @@ router.get('/detail', function(req, res) {
 		//评分人数
 		movie_obj.douban_user = stringWithDot(s_obj.ratings_count);
 
-		var film_info = new Object();
+		var film_info = {};
 		//名称
 		film_info.title = s_obj.title;
 		//年代
@@ -179,9 +179,9 @@ router.get('/detail', function(req, res) {
 			var $ = cheerio.load(douban.text);
 			
 			//抓取短评
-			var s_comments = new Array();
+			var s_comments = [];
 			$('div#hot-comments.tab div.comment-item').each(function(i,sc){
-				var s_comment = new Object();
+				var s_comment = {};
 				var short_comment = $(sc);
 				var comment_content = short_comment.find('p').text();
 				var comment_vote = short_comment.find('span.comment-vote');
@@ -198,14 +198,14 @@ router.get('/detail', function(req, res) {
 				s_comment.rate = rate;
 				s_comment.comment_content = comment_content;
 				s_comments.push(s_comment);
-			})
+			});
 
 
 
 			//抓取长评
-			var l_comments = new Array();
+			var l_comments = [];
 			$('div#review_section div.review').each(function(i,lc){
-				var l_comment = new Object();
+				var l_comment = {};
 				var long_comment = $(lc);
 				var comment_content = long_comment.find('div.review-bd').children().first().children().first().text();
 				var review_hd = long_comment.find('div.review-hd');
@@ -225,7 +225,7 @@ router.get('/detail', function(req, res) {
 				l_comment.user_img = user_img;
 				l_comment.rate = rate;
 				l_comments.push(l_comment);
-			})
+			});
 
 			$('div#info span.attrs').each(function(i,e){
 				var ele = $(e);
@@ -233,11 +233,11 @@ router.get('/detail', function(req, res) {
 				ele.children('a').each(function(ai,ae){
 					var aele = $(ae);
 					s += ' / ' + aele.text() ;
-				})
+				});
 				if(s.length>0){
 					s = s.substring(3);
 				}
-				var p = ele.prev().text()
+				var p = ele.prev().text();
 				if(p === '导演'){
 					film_info.directors = s;
 				}
@@ -247,13 +247,13 @@ router.get('/detail', function(req, res) {
 				if(p === '主演'){
 					film_info.casts = s;
 				}
-			})
+			});
 			
 			var imdb_url = '';
 			$('div#info span.pl').each(function(i,e){
 				var ele = $(e);
 				var k = ele.text();
-				var t = ele.next().text()
+				var t = ele.next().text();
 				if(subtype === 'tv'){
 					if(k === '首播:'){
 						film_info.pubdates = t;
@@ -269,14 +269,14 @@ router.get('/detail', function(req, res) {
 				if(k === 'IMDb链接:'){
 					imdb_url = ele.next().attr('href');
 				}
-			})
+			});
 			
 			if(imdb_url !== ''){	
 				movie_obj.imdb_url = imdb_url;
 			}
 			res.render('detail', {  l_comments:l_comments, s_comments:s_comments ,subtype:subtype,title:title, movie_obj:movie_obj , film_info:film_info });			
-		})
-	})
+		});
+	});
 });
 
 function stringWithDot(s){
@@ -290,7 +290,7 @@ function stringWithDot(s){
 	}else{
 		i = parseInt(s.length/3) + 1;
 	}
-	var arr = new Array();
+	var arr = [];
 	for(var j = 0; j<i ; j++){
 		var start = s.length-(j+1)*3;
 		start = start<0?0:start;
@@ -298,9 +298,9 @@ function stringWithDot(s){
 		var c = s.substring(start,end);
 		arr.push(c);
 	}
-	var s_arr = new Array();
+	var s_arr = [];
 	for(var k = arr.length-1 ; k >-1 ; k--){
-		s_arr.push(arr[k])
+		s_arr.push(arr[k]);
 	}
 	return s_arr.join(",");
 }
@@ -316,7 +316,7 @@ function stringWithDot2(s,n){
     n = parseInt(n);
     s += '';
     var i = s.length%n === 0 ? Math.floor(s.length/n) : (Math.floor(s.length/n) + 1);
-    var arr = new Array();
+    var arr = [];
     for(var j = 0; j<i ; j++){
         arr.push(s.substring((s.length-(j+1)*n)<0?0:(s.length-(j+1)*n),s.length-j*n));
     }
@@ -327,7 +327,7 @@ var re = "";
 function stringWithDot3(s,n){
 	if(s.length > n){
 		re = "," + s.substring(s.length-n) + re;
-		stringWithDot3(s.substring(0,s.length-n),n)
+		stringWithDot3(s.substring(0,s.length-n),n);
 	}else{
 		re = s + re;
 	}
