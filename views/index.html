@@ -1,11 +1,37 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html class="no-js" lang="">
   <head>
+  	<%- partial('common/meta') %>
     <title>搜评-开启你的电影搜索之旅</title>
-    <%- partial('common') %>
+    <%- partial('common/head') %>
+	<style>
+		.h1 {
+		    cursor:pointer;
+		    margin-left:40%;
+		    font-family:Microsoft YaHei;
+		    color:#3388FF;
+		}
+		.div_top {
+			margin-top:10px;
+		}
+		.div_main {
+			margin:10% 10% 10% 30%;
+		}
+		.span_small {
+			font-size:16px;
+			color:#000000;
+		}
+		.div_loading {
+			margin:5% 0% 0% 25%;
+		}
+		#loading {
+			display:none;
+		}
+	</style>
   </head>
   <body>
-		<div style="margin-top:10px">
+  		<%- partial('common/ie') %>
+		<div class="div_top">
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<a href="http://weibo.com/panhongbo" title="我的微博啦"><i class="fa fa-weibo fa-2x"></i></a>
 		&nbsp;&nbsp;&nbsp;&nbsp;
@@ -13,27 +39,26 @@
 		&nbsp;&nbsp;&nbsp;&nbsp;
 		<a href="mailto:391400311@qq.com" title="欢迎提问题啊"><i class="fa fa-envelope fa-2x"></i></a>
 		</div>
-		<div style="margin:10% 10% 10% 30%;">
+		<div class="div_main">
 			<div class="row">
 				<div class="col-lg-8">
-					<a href="/" style="text-decoration:none;"><h1 style="cursor:pointer;margin-left:40%;font-family:Microsoft YaHei;color:#3388FF;">搜评
-					<span style="font-size:16px;color:#000000;">--开启你的电影搜索之旅</span></h1></a>
+					<a href="/" style="text-decoration:none;"><h1 class="h1">搜评
+					<span class="span_small">--开启你的电影搜索之旅</span></h1></a>
 					<br>
-					<form role="form">
-				    	<div class="input-group">
-						      <input type="text" id="key" maxlength="100" class="form-control input-lg">
-						      <span class="input-group-btn">
-						        	<button class="btn btn-warning btn-lg" id="submit" onclick="search()">
-						        		&nbsp;<span class="glyphicon glyphicon-search"></span>&nbsp;
-						        	</button>
-						      </span>
-				    	</div><!-- /input-group -->
-				    </form>
+			    	<div class="input-group">
+					      <input type="text" id="key" name="key" maxlength="100" class="form-control input-lg">
+					      <span class="input-group-btn">
+					        	<button class="btn btn-warning btn-lg" id="submit" onclick="search()">
+					        		&nbsp;<span class="glyphicon glyphicon-search"></span>&nbsp;
+					        	</button>
+					      </span>
+			    	</div><!-- /input-group -->
 				</div><!-- /.col-lg-6 -->
 			</div><!-- /.row -->
-			<div  style="margin:5% 0% 0% 25%;">
-				<i id="loading" style="display:none;" class="fa fa-spinner fa-spin fa-5x"></i>
+			<div  class="div_loading">
+				<i id="loading" class="fa fa-spinner fa-spin fa-5x"></i>
 			</div>
 		</div>
+		<%- partial('common/foot') %>
   </body>
 </html>
