@@ -12,4 +12,4 @@ RUN npm install
 # Expose the container port
 EXPOSE 5000
 
-ENTRYPOINT ["node", "index.js"]
+ENTRYPOINT ["node", "app.js"]
