@@ -55,8 +55,8 @@ app.use(function(err, req, res, next) {
     });
 });
 
-app.listen(process.env.VCAP_APP_PORT || 3000, function () {
-    console.log("souping fuck you asshole on " + (process.env.VCAP_APP_PORT || 3000) );
+app.listen(process.env.VCAP_APP_PORT || 5000, function () {
+    console.log("souping fuck you asshole on " + (process.env.VCAP_APP_PORT || 5000) );
 });
 
 module.exports = app;
