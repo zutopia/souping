@@ -27,7 +27,7 @@ function Imagess(url,obj,callback){
 //显示图片 
 function checkimg(obj,obj2){ 
 //	$(obj2).css('margin-top','0px');
-	$(obj2).animate({width:'160',height:'230'});
+	$(obj2).animate({width:'120',height:'180'});
 //	$(obj2).attr('width',160);
 //	$(obj2).attr('height',230);
 	$(obj2).attr('src',obj.src); 
@@ -37,10 +37,11 @@ function showPop(id,imgurl,order,title){
 	var placement = 'right';
 	$('#'+id).popover({
 		placement:placement,
+		//animation:true,
 		html:true,
 		//content:'<div style="width:160px;height:230px;text-align:center;" ><img style="margin-top:100px;" id="img_'+id+'" width="25" height="25" src="/images/loading3.gif"></div>'
 		//content:'<img  id="img_'+id+'" width="120" height="90" src="/images/loading2.gif">'
-		content:'<a href="/detail?id='+id+'" target="_blank"><img  id="img_'+id+'"  onmouseover="showThis()" onmouseout="hidePop(\''+id+'\')" width="25" height="25" src="/images/loading3.gif" title="'+title+'"></a>'
+		content:'<a href="/detail?id='+id+'" target="_blank"><img  id="img_'+id+'"  onmouseover="showThis()" onmouseout="hidePop(\''+id+'\')" width="120" height="180" src="/images/loading3.gif" title="'+title+'"></a>'
 	})
 	$('#'+id).popover('show');
 	Imagess(imgurl,$('#img_'+id),checkimg);
