@@ -1,0 +1,117 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+  	<%- partial('../common/meta') %>
+    <title><%= obj.title %>_搜评</title>
+    <%- partial('../common/head') %>
+    <style type="text/css">
+    	
+
+    	a:visited {
+		  color: #669;
+		  text-decoration: none;
+		}
+
+		a:link {
+		  color: #37a;
+		  text-decoration: none;
+		}
+
+		a:visited {
+		  color: #669;
+		  text-decoration: none;
+		}
+
+		a:hover {
+		  color: #fff;
+		  text-decoration: none;
+		  background: #37a;
+		}
+
+		.div_item{
+			width:33%;
+			float:left;
+			padding:10px;
+		}
+		
+		.score{
+			color:#ea0032;
+			font-weight:600;
+			font-size:20px;
+		}
+        .div_main {
+            margin:1% 0% 0% 0%;
+        }
+
+        .h1 {
+            margin-top:5px;
+            font-size:32px;
+            font-family:Microsoft YaHei;
+            color:#3388FF;
+            cursor:pointer;
+        }
+
+        .h3 {
+            margin-top:15px;
+        }
+
+        .movie{
+            font-weight:600;
+            float:right;
+            margin-right:10px;
+            margin-top:15px;
+            font-size:20px;
+            text-decoration: none;
+            color:#3388FF;
+            cursor:pointer;
+        }
+    </style>
+  </head>
+  <body>
+    <%- partial('../common/ie') %>
+    <div class="container" style="margin-bottom:30px;">
+    <div class="div_main">
+        <div class="row">
+            <div class="col-md-1" style="height:50px;">
+                <span onclick="javascript:window.location.href ='/';"><h1 class="h1">搜评</h1></span>
+            </div>
+            <div class="col-lg-5">
+                <h3 class="h3"><%= obj.title %></h3>
+            </div>
+            <span onclick="javascript:window.location.href='/movie/top100'" class="movie">Top100</span>
+			<span onclick="javascript:window.location.href='/movie/boxlist'" class="movie">北美票房榜</span>
+			<span onclick="javascript:window.location.href='/movie'" class="movie">正在上映</span>
+        </div>
+    </div>
+    <hr>
+    	<% if (typeof(obj.list) !== 'undefined' && obj.list.length > 0) { %>
+			<% obj.list.forEach(function (v, k){ %>
+				<div class="div_item">
+			    	<table>
+			    	<tr>
+			    		<td>
+			    			<a href="/detail?id=<%= v.id %>"><img  width="120px" height="171px" src="<%= v.img %>" /></a>
+			    		</td>
+			    		<td>
+			    			&nbsp;&nbsp;&nbsp;&nbsp;
+			    		</td>
+			    		<td style="vertical-align:top;">
+			    		<div>
+			    			<a href="/detail?id=<%= v.id %>"><%= v.title %>(<%= v.year %>)</a><br>
+			    			<b>豆瓣评分</b>：<span class="score"><%= v.rating %></span><br>
+			    			<b>导演</b>：<%= v.directors %><br>
+			    			<b>主演</b>：<%= v.casts %><br>
+			    			<b>原名</b>：<%= v.original_title %><br>
+			    			<b>类型</b>：<%= v.genres %>
+			    		</div>
+			    		</td>
+			    	</tr>
+			    	</table>
+			    </div>
+			<% })%>
+		<% } %> 
+	</div>
+	<%- partial('../common/foot') %>
+	<script src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  </body>
+</html>

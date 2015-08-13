@@ -21,6 +21,7 @@
 		#loading {
 			display:none;
 		}
+		
 	</style>
   </head>
   <body>
@@ -46,7 +47,7 @@
 				</div>
 			</div><!-- /.row -->
 		</div>
-		<br>
+		<hr>
 		<% if (typeof(list) !== 'undefined' && list.length > 0) { %>
 			<% list.forEach(function (v, k){ %>
 				<div class="media">
@@ -98,8 +99,8 @@
 		<% } %> 
 	</div>
 	<%- partial('common/foot') %>
-	<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    <script src="js/main.js"></script>
+	<script src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="/js/main.js"></script>
   </body>
 </html>
 

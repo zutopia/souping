@@ -71,13 +71,15 @@ router.get('/main', function(req, res) {
 					var title = film.title;
 					var img = film.images.large;
 					var g_arr = film.genres;
-					var genres = '';
+					var genres = g_arr.join(" / ");
+					/*
 					for(var j in g_arr){
 						genres += ' / ' + g_arr[j] ;
 					}
 					if(genres.length>0){
 						genres = genres.substring(3);
 					}
+					*/
 					var c_arr = film.casts;
 					var casts = '';
 					for(var k in c_arr){
@@ -156,23 +158,27 @@ router.get('/detail', function(req, res) {
 			film_info.casts;
 			//影片类型
 			var g_arr = s_obj.genres;
-			var genres = '';
+			var genres = g_arr.join(" / ");
+			/*
 			for(var g in g_arr){
 				genres += ' / ' + g_arr[g] ;
 			}
 			if(genres.length>0){
 				genres = genres.substring(3);
 			}
+			*/
 			film_info.genres = genres;
 			//制片国家/地区
 			var c_arr = s_obj.countries;
-			var countries = '';
+			var countries = c_arr.join(" / ");
+			/*
 			for(var c in c_arr){
 				countries += ' / ' + c_arr[c] ;
 			}
 			if(countries.length>0){
 				countries = countries.substring(3);
 			}
+			*/
 			film_info.countries = countries;
 			//语言
 			film_info.languages;

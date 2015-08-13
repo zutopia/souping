@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
+var movielist = require('./routes/movie');
 
 var app = express();
 
@@ -23,6 +24,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
+app.use('/movie', movielist);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -55,8 +57,8 @@ app.use(function(err, req, res, next) {
     });
 });
 
-app.listen(process.env.VCAP_APP_PORT || 5000, function () {
-    console.log("souping fuck you asshole on " + (process.env.VCAP_APP_PORT || 5000) );
+app.listen(process.env.VCAP_APP_PORT || 3000, function () {
+    console.log("souping fuck you asshole on " + (process.env.VCAP_APP_PORT || 3000) );
 });
 
 module.exports = app;

@@ -15,7 +15,7 @@
 			margin-top:10px;
 		}
 		.div_main {
-			margin:10% 10% 10% 30%;
+			margin:5% 10% 10% 30%;
 		}
 		.span_small {
 			font-size:16px;
@@ -26,6 +26,17 @@
 		}
 		#loading {
 			display:none;
+		}
+
+		.movie{
+			font-weight:600;
+			float:right;
+			margin-right:10px;
+			margin-top:0px;
+			font-size:20px;
+			text-decoration: none;
+			color:#3388FF;
+            cursor:pointer;
 		}
 	</style>
   </head>
@@ -43,7 +54,13 @@
 		<a onmouseover="showWeixin(this)"  onmouseout="hideWeixin(this)" ><i class="fa fa-weixin fa-2x" style="cursor:pointer;"></i></a>
 		&nbsp;&nbsp;&nbsp;&nbsp;
 		<a href="mailto:391400311@qq.com" title="欢迎提问题啊"><i class="fa fa-envelope fa-2x"></i></a>
+
+		<span onclick="javascript:window.location.href='/movie/top100'" class="movie">Top100</span>
+		<span onclick="javascript:window.location.href='/movie/boxlist'" class="movie">北美票房榜</span>
+		<span onclick="javascript:window.location.href='/movie/coming'" class="movie">即将上映</span>
+		<span onclick="javascript:window.location.href='/movie'" class="movie">正在上映</span>
 		</div>
+		<hr>
 		<div class="div_main">
 			<div class="row">
 				<div class="col-lg-8">
@@ -65,7 +82,7 @@
 			</div>
 		</div>
 		<%- partial('common/foot') %>
-		<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    	<script src="js/index.js"></script>
+		<script src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    	<script src="/js/index.js"></script>
   </body>
 </html>

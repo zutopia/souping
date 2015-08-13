@@ -1,0 +1,115 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+  	<%- partial('../common/meta') %>
+    <title>Top100_搜评</title>
+    <%- partial('../common/head') %>
+    <style type="text/css">
+    	a:visited {
+		  color: #669;
+		  text-decoration: none;
+		}
+
+		a:link {
+		  color: #37a;
+		  text-decoration: none;
+		}
+
+		a:visited {
+		  color: #669;
+		  text-decoration: none;
+		}
+
+		a:hover {
+		  color: #fff;
+		  text-decoration: none;
+		  background: #37a;
+		}
+		.score{
+			color:#ea0032;
+			font-weight:600;
+		}
+        .div_main {
+            margin:1% 0% 0% 0%;
+        }
+
+        .h1 {
+            margin-top:5px;
+            font-size:32px;
+            font-family:Microsoft YaHei;
+            color:#3388FF;
+            cursor:pointer;
+        }
+
+        .h3 {
+            margin-top:15px;
+        }
+
+        .movie{
+            font-weight:600;
+            float:right;
+            margin-right:10px;
+            margin-top:15px;
+            font-size:20px;
+            text-decoration: none;
+            color:#3388FF;
+            cursor:pointer;
+        }
+    </style>
+  </head>
+  <body>
+    <%- partial('../common/ie') %>
+    <div class="container" style="margin-bottom:30px;">
+    <div class="div_main">
+        <div class="row">
+            <div class="col-md-1" style="height:50px;">
+                <span onclick="javascript:window.location.href ='/';"><h1 class="h1">搜评</h1></span>
+            </div>
+            <div class="col-lg-5">
+                <h3 class="h3">Top100</h3>
+            </div>
+            <span onclick="javascript:window.location.href='/movie/boxlist'" class="movie">北美票房榜</span>
+            <span onclick="javascript:window.location.href='/movie/coming'" class="movie">即将上映</span>
+            <span onclick="javascript:window.location.href='/movie'" class="movie">正在上映</span>
+        </div>
+    </div>
+    <hr>
+    <table border="1">
+    	<tr>
+    		<th ></th>
+    		<th style="text-align:center;" colspan="3">豆瓣</th>
+    		<th style="text-align:center;" colspan="3">IMDB</th>
+    	</tr>
+    	<tr>
+    		<td width="5%">Rank</td>
+
+    		<td width="5%"></td>
+    		<td width="35%">Title</td>
+    		<td width="7%">Rating</td>
+
+    		<td width="5%"></td>
+    		<td width="35%">Title</td>
+    		<td width="10%">Rating</td>
+    	</tr>
+
+    	<% if (typeof(list) !== 'undefined' && list.length > 0) { %>
+			<% list.forEach(function (v, k){ %>
+				<tr>
+		    		<td><strong><%= k+1 %></strong></td>
+
+		    		<td><img src="<%= v.douban_img %>" width="34px;" height="50px"></td>
+		    		<td><a href="/detail?id=<%= v.douban_id %>" ><%= v.douban_title %></a><span>(<%= v.douban_year %>)</span></td>
+		    		<td><span class="score"><%= v.douban_rating %></span></td>
+
+		    		<td><img src="<%= v.imdb_img %>" width="34px;" height="50px"></td>
+		    		<td><a href="http://www.imdb.com/<%= v.imdb_href %>" ><%= v.imdb_title %></a><span><%= v.imdb_year %></span></td>
+		    		<td><span class="score"><%= v.imdb_rating %></span></td>
+		    	</tr>
+			<% })%>
+		<% } %> 
+    </table>
+    	
+	<%- partial('../common/foot') %>
+	<script src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  </body>
+</html>

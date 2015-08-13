@@ -3,7 +3,8 @@ $(function(){
         if(event.keyCode=="13"){
             search();
         }
-    })
+    });
+
 })
 
 function search(){
