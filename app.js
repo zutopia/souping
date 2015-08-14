@@ -61,4 +61,7 @@ app.listen(process.env.VCAP_APP_PORT || 3000, function () {
     console.log("souping fuck you asshole on " + (process.env.VCAP_APP_PORT || 3000) );
 });
 
+//手动gc   间隔时间10s
+setInterval(global.gc,10000);
+
 module.exports = app;
