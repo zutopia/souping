@@ -16,6 +16,7 @@
     "ejs-mate": "2.0.0",
     "newrelic": "^1.18.4",
     "superagent": "*",
-    "cheerio": "*"
+    "cheerio": "*",
+	"oneapm": "1.2.8"
   }
 }
