@@ -1,5 +1,6 @@
 var superagent = require('superagent');
 var cheerio = require('cheerio');
+var async = require('async');
 var Url = require('url');
 var express = require('express');
 var router = express.Router();
@@ -72,14 +73,6 @@ router.get('/main', function(req, res) {
 					var img = film.images.large;
 					var g_arr = film.genres;
 					var genres = g_arr.join(" / ");
-					/*
-					for(var j in g_arr){
-						genres += ' / ' + g_arr[j] ;
-					}
-					if(genres.length>0){
-						genres = genres.substring(3);
-					}
-					*/
 					var c_arr = film.casts;
 					var casts = '';
 					for(var k in c_arr){
@@ -159,26 +152,10 @@ router.get('/detail', function(req, res) {
 			//影片类型
 			var g_arr = s_obj.genres;
 			var genres = g_arr.join(" / ");
-			/*
-			for(var g in g_arr){
-				genres += ' / ' + g_arr[g] ;
-			}
-			if(genres.length>0){
-				genres = genres.substring(3);
-			}
-			*/
 			film_info.genres = genres;
 			//制片国家/地区
 			var c_arr = s_obj.countries;
 			var countries = c_arr.join(" / ");
-			/*
-			for(var c in c_arr){
-				countries += ' / ' + c_arr[c] ;
-			}
-			if(countries.length>0){
-				countries = countries.substring(3);
-			}
-			*/
 			film_info.countries = countries;
 			//语言
 			film_info.languages;
@@ -288,7 +265,21 @@ router.get('/detail', function(req, res) {
 				if(imdb_url !== ''){	
 					movie_obj.imdb_url = imdb_url;
 				}
-				res.render('detail', {  l_comments:l_comments, s_comments:s_comments ,subtype:subtype,title:title, movie_obj:movie_obj , film_info:film_info });			
+				
+				if(l_comments.length > 0){
+					async.map(l_comments,function(l_comment,callback){
+						var comment_url = l_comment.comment_url;
+						superagent.get(comment_url).end(function (err, comment) {
+							var $ = cheerio.load(comment.text, {decodeEntities: false});
+							l_comment.comment_content = $('div#link-report').children().first().html();
+							callback(null,l_comment);
+						});
+					},function(err, results){
+						res.render('detail', {  l_comments:results, s_comments:s_comments ,subtype:subtype,title:title, movie_obj:movie_obj , film_info:film_info });			
+					});
+				}else{
+					res.render('detail', {  l_comments:l_comments, s_comments:s_comments ,subtype:subtype,title:title, movie_obj:movie_obj , film_info:film_info });			
+				}
 			});
 		});
 	}
