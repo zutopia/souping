@@ -51,12 +51,18 @@ router.get('/getimdbInfo', function(req, res) {
 router.get('/main', function(req, res) {
 	var params = Url.parse(req.url,true).query; 
 	var key = params.key;
-	console.log(key);
+	console.log('==================='+key+'===================');
 	if(typeof(key) === 'undefined' || key === '' || key === null ){
 		res.render('error');
 	} else {
 		superagent.get('https://api.douban.com/v2/movie/search?q='+key).end(function (err, sres) {
-			var r_obj = JSON.parse(sres.text);
+			try{
+				var r_obj = JSON.parse(sres.text);
+			}catch(e){
+				console.error(e);
+				res.render('error',{ key:key});
+				return;
+			}
 			var film_arr = r_obj.subjects;
 			if(typeof(film_arr) === 'undefined' || film_arr === null || film_arr.length === 0){
 				res.render('error', { key:key});
