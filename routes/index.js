@@ -55,7 +55,7 @@ router.get('/main', function(req, res) {
 	if(typeof(key) === 'undefined' || key === '' || key === null ){
 		res.render('error');
 	} else {
-		superagent.get('https://api.douban.com/v2/movie/search?q='+key).end(function (err, sres) {
+		superagent.get('https://api.douban.com/v2/movie/search').query({ q: key }).end(function (err, sres) {
 			try{
 				var r_obj = JSON.parse(sres.text);
 			}catch(e){
