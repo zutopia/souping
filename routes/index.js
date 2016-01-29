@@ -22,7 +22,7 @@ router.get('/getimdbInfo', function(req, res) {
 			}else{
 				var $_imdb = cheerio.load(imdb.text);
 				var flag = false;
-				var imdb_score = $_imdb('div.ratingValue > span').first().html();
+				var imdb_score = $_imdb('div.ratingValue span').first().html();
 				if(imdb_score !== null && imdb_score !== ''){
 				    imdb_score = imdb_score.trim();
 				}else{
@@ -34,7 +34,7 @@ router.get('/getimdbInfo', function(req, res) {
 				}else{
 				    flag = true;
 				}
-				var imdb_movie_pic = $_imdb('#img_primary > div.image > a > img ').attr('src');
+				//var imdb_movie_pic = $_imdb('div.poster > a > img ').attr('src');
 				if(flag){
 				    res.send({status:'fail'});
 				}else{
