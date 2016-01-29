@@ -22,13 +22,13 @@ router.get('/getimdbInfo', function(req, res) {
 			}else{
 				var $_imdb = cheerio.load(imdb.text);
 				var flag = false;
-				var imdb_score = $_imdb('div.titlePageSprite.star-box-giga-star').html();
+				var imdb_score = $_imdb('div.ratingValue > span').first().html();
 				if(imdb_score !== null && imdb_score !== ''){
 				    imdb_score = imdb_score.trim();
 				}else{
 				    flag = true;
 				}
-				var imdb_user = $_imdb('div.star-box-details > a').first().children('span').html();
+				var imdb_user = $_imdb('span.small').html();
 				if(imdb_user !== null && imdb_user !== ''){
 				    imdb_user = imdb_user.trim();
 				}else{
