@@ -297,6 +297,7 @@ router.get('/detail', function(req, res) {
 										callback2(null);
 									});
 								}else{
+									content = content.replace(src,img_name);
 									callback2(null);
 								}	
 							},function(err){
