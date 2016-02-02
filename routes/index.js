@@ -125,7 +125,13 @@ router.get('/detail', function(req, res) {
 		var subtype = '';
 		var title = '';
 		superagent.get('https://api.douban.com/v2/movie/subject/'+id).end(function (err, m) {
-			var s_obj = JSON.parse(m.text);
+			try{
+				var s_obj = JSON.parse(m.text);
+			}catch(e){
+				console.error(e);
+				res.render('error');
+				return;
+			}
 			var douban_url = s_obj.alt;
 			var movie_obj = {};
 			subtype = s_obj.subtype;
