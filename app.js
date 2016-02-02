@@ -1,6 +1,7 @@
 require('tingyun');  
 var express = require('express');
 var path = require('path');
+var fs = require('fs');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -58,7 +59,7 @@ app.use(function(err, req, res, next) {
 });
 
 app.listen(process.env.VCAP_APP_PORT || 3000, function () {
-    console.log("souping fuck you asshole on " + (process.env.VCAP_APP_PORT || 3000) );
+    console.log("souping is running ,port " + (process.env.VCAP_APP_PORT || 3000) );
 });
 
 //手动gc   间隔时间10s
@@ -69,11 +70,24 @@ var showMem = function() {
      var format = function(bytes) {
           return (bytes/1024/1024).toFixed(2)+'MB';
      };
+	 
      console.log('----------------------------------------');
      console.log('Process: heapTotal '+format(mem.heapTotal) + ' heapUsed ' + format(mem.heapUsed) + ' rss ' + format(mem.rss));
      console.log('----------------------------------------');
 };
+//打印内存信息
+//setInterval(showMem,20000);
 
-setInterval(showMem,20000);
+var delPic = function() {
+	var dirpath = 'public/images/img';
+    if(fs.existsSync(dirpath)) {
+		console.log('--------清除图片---------')
+		fs.readdirSync(dirpath).forEach(function(file){
+			fs.unlinkSync('public/images/img/'+file);
+		});
+	}		
+};
+//清除images/img下面图片   间隔时间一天
+setInterval(delPic,24*60*60*1000);
 
 module.exports = app;

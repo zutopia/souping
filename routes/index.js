@@ -4,6 +4,7 @@ var async = require('async');
 var Url = require('url');
 var express = require('express');
 var router = express.Router();
+var fs = require('fs');
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -283,8 +284,25 @@ router.get('/detail', function(req, res) {
 						var comment_url = l_comment.comment_url;
 						superagent.get(comment_url).end(function (err, comment) {
 							var $ = cheerio.load(comment.text, {decodeEntities: false});
-							l_comment.comment_content = $('div#link-report').children().first().html();
-							callback(null,l_comment);
+							var content = $('div#link-report').children().first().html();
+							async.map($(content).children('img'),function(img,callback2){
+								var src = $(img).attr('src');
+								var name = src.substring(src.lastIndexOf('/')+1);
+								var new_name = 'public/images/img/'+name+'.jpg';
+								var img_name = 'images/img/'+name+'.jpg';
+								if(!fs.existsSync(new_name)){
+									console.log('下载图片========'+$(img).attr('src'));
+									superagent.get($(img).attr('src')).pipe(fs.createWriteStream(new_name)).on('finish', function() {
+										content = content.replace(src,img_name);
+										callback2(null);
+									});
+								}else{
+									callback2(null);
+								}	
+							},function(err){
+								l_comment.comment_content = content;
+								callback(null,l_comment);
+							});
 						});
 					},function(err, results){
 						res.render('detail', {  l_comments:results, s_comments:s_comments ,subtype:subtype,title:title, movie_obj:movie_obj , film_info:film_info });			
