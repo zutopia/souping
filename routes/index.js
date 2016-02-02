@@ -288,8 +288,8 @@ router.get('/detail', function(req, res) {
 							async.map($(content).children('img'),function(img,callback2){
 								var src = $(img).attr('src');
 								var name = src.substring(src.lastIndexOf('/')+1);
-								var new_name = 'public/images/img/'+name+'.jpg';
-								var img_name = 'images/img/'+name+'.jpg';
+								var new_name = 'public/images/img/'+name;
+								var img_name = 'images/img/'+name;
 								if(!fs.existsSync(new_name)){
 									console.log('下载图片========'+$(img).attr('src'));
 									superagent.get($(img).attr('src')).pipe(fs.createWriteStream(new_name)).on('finish', function() {

@@ -11,11 +11,20 @@ router.get('/', function(req, res) {
 	if(typeof(city) === 'undefined' || city === '' || city === null ){
 		city = '武汉';
 	}
-	var url = 'https://api.douban.com/v2/movie/in_theaters?city='+city;
-	getMovies(url,function(err,obj){
-		res.render('movielist/list',{obj:obj});
-	})
-	
+	var url = 'https://api.douban.com/v2/movie/in_theaters';
+	superagent.get(url).query({ city: city }).end(function (err, sres) {
+		var obj = JSON.parse(sres.text);
+		var n_obj = {};
+		n_obj.title = obj.title;
+		var subjects = obj.subjects;
+		var mlist = [];
+		for(var i in subjects){
+			var m = subjects[i];
+			mlist.push(analysis(m));
+		}
+		n_obj.list = mlist;
+		res.render('movielist/list',{obj:n_obj});
+	});
 });
 
 router.get('/coming', function(req, res) {
