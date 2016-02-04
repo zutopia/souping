@@ -13,7 +13,13 @@ router.get('/', function(req, res) {
 	}
 	var url = 'https://api.douban.com/v2/movie/in_theaters';
 	superagent.get(url).query({ city: city }).end(function (err, sres) {
-		var obj = JSON.parse(sres.text);
+		try{
+			var obj = JSON.parse(sres.text);
+		}catch(e){
+			console.error(e);
+			res.render('error');
+			return;
+		}
 		var n_obj = {};
 		n_obj.title = obj.title;
 		var subjects = obj.subjects;
@@ -30,14 +36,22 @@ router.get('/', function(req, res) {
 router.get('/coming', function(req, res) {
 	var url = 'https://api.douban.com/v2/movie/coming_soon';
 	getMovies(url,function(err,obj){
-		res.render('movielist/coming_list',{obj:obj});
+		if(err){
+			res.render('error');
+		}else{
+			res.render('movielist/coming_list',{obj:obj});
+		}
 	});
 });
 
 router.get('/boxlist', function(req, res) {
 	var url = 'https://api.douban.com/v2/movie/us_box';
 	getMovieBoxes(url,function(err,obj){
-		res.render('movielist/box_list',{obj:obj});
+		if(err){
+			res.render('error');
+		}else{
+			res.render('movielist/box_list',{obj:obj});
+		}	
 	});
 });
 
@@ -46,7 +60,13 @@ router.get('/top100', function(req, res) {
 	var imdb = 'http://www.imdb.com/chart/top?ref_=ft_250';
 	var mlist = [];
 	superagent.get(douban).end(function (err, sres) {
-		var d_obj = JSON.parse(sres.text);
+		try{
+			var d_obj = JSON.parse(sres.text);
+		}catch(e){
+			console.error(e);
+			res.render('error');
+			return;
+		}
 		var subjects = d_obj.subjects;
 		for(var i in subjects){
 			var m = subjects[i];
@@ -76,29 +96,33 @@ router.get('/top100', function(req, res) {
 				console.log(err);
 				res.render('movielist/top250',{list:mlist});
 			}else{
+				try{
 				var $ = cheerio.load(ires.text);
-				$('table.chart tr').each(function(i,tr){
-					if(i === 0){
-						return true;
-					}
-					if(i === 101){
-						return false;
-					}
-					var posterColumn = $(tr).find('td.posterColumn');
-					var imdb_href = $(posterColumn).find('a').attr('href');
-					var imdb_img = $(posterColumn).find('img').attr('src');
-					var titleColumn = $(tr).find('td.titleColumn');
-					var imdb_title = $(titleColumn).find('a').text();
-					var imdb_year = $(titleColumn).find('span.secondaryInfo').text();
-					var ratingColumn = $(tr).find('td.ratingColumn.imdbRating');
-					var imdb_rating = $(ratingColumn).text().trim();
-					var j = i -1;
-					mlist[j].imdb_href = imdb_href;
-					mlist[j].imdb_img = imdb_img;
-					mlist[j].imdb_year = imdb_year;
-					mlist[j].imdb_title = imdb_title;
-					mlist[j].imdb_rating = imdb_rating;
-				});
+					$('table.chart tr').each(function(i,tr){
+						if(i === 0){
+							return true;
+						}
+						if(i === 101){
+							return false;
+						}
+						var posterColumn = $(tr).find('td.posterColumn');
+						var imdb_href = $(posterColumn).find('a').attr('href');
+						var imdb_img = $(posterColumn).find('img').attr('src');
+						var titleColumn = $(tr).find('td.titleColumn');
+						var imdb_title = $(titleColumn).find('a').text();
+						var imdb_year = $(titleColumn).find('span.secondaryInfo').text();
+						var ratingColumn = $(tr).find('td.ratingColumn.imdbRating');
+						var imdb_rating = $(ratingColumn).text().trim();
+						var j = i -1;
+						mlist[j].imdb_href = imdb_href;
+						mlist[j].imdb_img = imdb_img;
+						mlist[j].imdb_year = imdb_year;
+						mlist[j].imdb_title = imdb_title;
+						mlist[j].imdb_rating = imdb_rating;
+					});
+				}catch(e){
+					console.error(e);
+				}
 				res.render('movielist/top100',{list:mlist});
 			}
 		});
@@ -108,7 +132,13 @@ router.get('/top100', function(req, res) {
 
 var getMovies = function(url,callback){
 	superagent.get(url).end(function (err, sres) {
-		var obj = JSON.parse(sres.text);
+		try{
+			var obj = JSON.parse(sres.text);
+		}catch(e){
+			console.error(e);
+			callback(e);
+			return;
+		}
 		var n_obj = {};
 		n_obj.title = obj.title;
 		var subjects = obj.subjects;
@@ -124,7 +154,13 @@ var getMovies = function(url,callback){
 
 var getMovieBoxes = function(url,callback){
 	superagent.get(url).end(function (err, sres) {
-		var obj = JSON.parse(sres.text);
+		try{
+			var obj = JSON.parse(sres.text);
+		}catch(e){
+			console.error(e);
+			callback(e);
+			return;
+		}
 		var n_obj = {};
 		n_obj.title = obj.title;
 		n_obj.date = obj.date;
