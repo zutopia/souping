@@ -88,6 +88,6 @@ var delPic = function() {
 	}		
 };
 //清除images/img下面图片   间隔时间一天
-setInterval(delPic,24*60*60*1000);
+setInterval(delPic,30*24*60*60*1000);
 
 module.exports = app;
