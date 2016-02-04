@@ -87,8 +87,8 @@ var delPic = function() {
 		});
 	}		
 };
-//清除images/img下面图片   间隔时间30天
-var delay = 30*24*60*60*1000;
+//清除images/img下面图片   间隔时间24天  setInterval   delay参数介于2147483647和1之间
+var delay = 24*24*60*60*1000;
 setInterval(delPic,delay);
 
 module.exports = app;
