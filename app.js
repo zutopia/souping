@@ -63,6 +63,7 @@ app.listen(process.env.VCAP_APP_PORT || 3000, function () {
 });
 
 //手动gc   间隔时间10s
+/*
 setInterval(global.gc,10000);
 
 var showMem = function() {
@@ -75,6 +76,7 @@ var showMem = function() {
      console.log('Process: heapTotal '+format(mem.heapTotal) + ' heapUsed ' + format(mem.heapUsed) + ' rss ' + format(mem.rss));
      console.log('----------------------------------------');
 };
+*/
 //打印内存信息
 //setInterval(showMem,20000);
 
