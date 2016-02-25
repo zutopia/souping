@@ -12,5 +12,6 @@ RUN npm install
 # Expose the container port
 EXPOSE 3000
 
-#ENTRYPOINT ["node", "app.js"]
-ENTRYPOINT ["node","-trace_gc","-expose-gc","app.js"]
+ENTRYPOINT ["node", "app.js"]
+#手动GC需要用下面的命令
+#ENTRYPOINT ["node","-trace_gc","-expose-gc","app.js"]
